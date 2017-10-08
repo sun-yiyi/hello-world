@@ -1,0 +1,113 @@
+#!/usr/bin/env python与#!/usr/bin/python的区别
+
+脚本语言的第一行，目的就是指出，你想要你的这个文件中的代码用什么可执行程序去运行它，就这么简单
+
+#!/usr/bin/python是告诉操作系统执行这个脚本的时候，调用/usr/bin下的python解释器；
+#!/usr/bin/env python这种用法是为了防止操作系统用户没有将python装在默认的/usr/bin路径里。当系统看到这一行的时候，首先会到env设置里查找python的安装路径，再调用对应路径下的解释器程序完成操作。
+#!/usr/bin/python相当于写死了python路径;
+#!/usr/bin/env python会去环境设置寻找python目录,推荐这种写法
+
+Vim多行缩进技巧 
+
+方法1：
+普通模式下在一行上，">>",或"<<"（连按两下），可以缩进或缩出，用"n>>","n<<"（n自然数），多行缩进缩出
+按v进入visual状态，选定多行，用“>或<”，----缩进或缩出
+方法2：
+通常根据语言特征使用自动缩进排版：
+在命令状态下对当前行用== （连按=两次）, 或对多行用n==（n是自然数）表示自动缩进从当前行起的下面n行。
+你可以试试把代码缩进任意打乱再用n==排版，相当于一般IDE里的code format。
+
+
+10.3定义函数遇到问题
+# -*- coding:utf-8 -*-
+import math
+
+def quadratic(a, b, c):
+
+    d = b*b - 4*a*c
+    if d >= 0:
+        x1 = (-b + math.sqrt(d))/2/a
+        x2 = (-b - math.sqrt(d))/2/a
+        return x1,x2
+    else:
+        return "无解"
+
+a = int(input("请输入a："))
+b = int(input("请输入b："))
+c = int(input("请输入c："))
+
+quadratic(a, b, c)
+
+当输入a,b,c分别为2,3,1时
+请问为什么程序当运行到return x1,x2就不运行了
+但是把return x1,x2换成print(x1,x2)程序就正常运行了？
+
+解答：
+#python#return和print的一些理解
+
+刚开始学习python，之前只有一些c的基础，也忘得差不多了，现在想边学习边总结和分享收获~
+
+看书时看了return的用法，可是后来和print混了，老是感觉可以将函数return值直接显示，但不是这样的。
+
+看到知道上的一个例子：
+
+代码 （1） ++++++++++++++++++++++++++++++++++
+
+x = 1
+y = 2
+def add (x, y):
+　　z = x + y
+　　return z
+print （add(x,y)）
+
+代码 （2） ++++++++++++++++++++++++++++++++++
+
+x = 1
+y = 2
+def add (x, y):
+　　z = x + y
+　　print z
+print （add(x,y)）
+
+输出结果 （相同） ++++++++++++++++++++++++++++++++++
+
+>>> 3
+这里代码1的结果是打印返回值而得到的，而代码2的结果是在打印函数add (x, y)时，add (x, y)执行print z语句而得到的，其返回值是None，所以输出结果应为
+
+3
+
+None
+
+返回值只有打印才能得到，例如
+
+def a():
+
+　　print('ss')
+
+def b():
+
+　　return 'ss'
+
+直接运行a()，是有结果的，而直接运行b()是没有结果的，只有运行print(b())才可以显示'ss'。
+
+另外，将函数赋值给变量可以获得返回值，如上函数b()，加上
+
+c=b()
+
+c
+
+是有结果的，因为c得到了b()的返回值'ss'。
+
+另外，在交互模式下，return的结果会自动打印出来，而作为脚本单独运行时则需要print函数才能显示。
+
+
+
+问题SyntaxError: 'break' outside loop？
+答：
+python中break，continut只能用于for，while这样的循环中，不然会报错。
+SyntaxError: 'break' outside loop
+
+
+汉诺塔问题
+递归思路简单清晰，进行抽象思考即可。抽象思考移动的过程：不需要考虑单双数，主函数第一次调用时，规模为n，判断n==1，ac；否则抽象思考一下，最上面的规模n1个盘子都移动到b上，最下面的1个直接ac；然后再考虑把b上的规模n1个盘子，再移到c上。
+
